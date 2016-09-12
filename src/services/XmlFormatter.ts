@@ -2,6 +2,8 @@
 
 // Based on pretty-data (https://github.com/vkiryukhin/pretty-data)
 export class XmlFormatter {
+    private _options: IXmlFormatterOptions;
+
     constructor(options?: IXmlFormatterOptions) {
         options = options || {};
         
@@ -19,6 +21,8 @@ export class XmlFormatter {
         this.newLine = options.newLine || '\n';
         this.indentPattern = (options.preferSpaces) ? ' '.repeat(options.tabSize) : '\t';
         this.splitNamespaces = options.splitNamespaces;
+
+        this._options = options;
     }
     
     newLine: string;
@@ -26,7 +30,10 @@ export class XmlFormatter {
     splitNamespaces: boolean;
     
     format(xml: string): string {
-        xml = this.minify(xml, false);
+        if (!this._options.skipMinify) {
+            xml = this.minify(xml, false);
+        }
+        
         xml = xml.replace(/</g, '~::~<');
         
         if (this.splitNamespaces) {
@@ -181,4 +188,5 @@ export interface IXmlFormatterOptions {
     tabSize?: number;
     newLine?: string;
     splitNamespaces?: boolean;
+    skipMinify?: boolean;
 }

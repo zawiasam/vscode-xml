@@ -83,6 +83,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Ignores default xmlns attribute when evaluating XPath."
+                },
+                "xmlTools.skipMinifyBeforeFormat": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Skips the minification process before formatting the XML."
                 }
             }
         },
